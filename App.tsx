@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -16,6 +6,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
+  Button,
   View,
 } from 'react-native';
 
@@ -23,7 +14,15 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import TransactionItem from './TransactionItem';
+import {
+  NavigationContainer,
+  RootStack,
+} from "./src/Navigator";
+
+import {
+  HomeScreen,
+  DetailScreen,
+} from "./src/screens/Screens";
 
 const Section: React.FC<{
   title: string;
@@ -54,26 +53,17 @@ const Section: React.FC<{
 };
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <TransactionItem />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName="HomeScreen">
+        <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+        <RootStack.Screen
+          name="DetailScreen"
+          component={DetailScreen}
+          initialParams={{ title: "I am default" }}
+        />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 };
 
