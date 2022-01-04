@@ -6,11 +6,12 @@ import {
   View,
 } from 'react-native';
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faArrowRight, faCircle, faCircleNotch, faDotCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArrowRight, faCircle, } from '@fortawesome/free-solid-svg-icons';
+import ITransaction from '../models/ITransaction';
 
 
-const TransactionItem = () => {
+const TransactionItem: React.FC<{ trx: ITransaction }> = (props) => {
   return (
     <View style={[styles.mainContainer, {
       flexDirection: "row",
@@ -20,20 +21,16 @@ const TransactionItem = () => {
         flex: 2,
         justifyContent: "center"
       }]}>
-        <View style={[, {
-          flexDirection: "row",
-        }]}>
-          <Text>Inazuma </Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text>{props.trx.sender_bank.toUpperCase()} </Text>
           <FontAwesomeIcon icon={faArrowRight} />
-          <Text>Liyue</Text>
+          <Text>{props.trx.beneficiary_bank.toUpperCase()}</Text>
         </View>
-        <Text>Kamisato Ayaka</Text>
-        <View style={[, {
-          flexDirection: "row",
-        }]}>
-          <Text>Rp 99.999 </Text>
+        <Text>{props.trx.beneficiary_name.toUpperCase()}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text>{props.trx.amount}</Text>
           <FontAwesomeIcon icon={faCircle} />
-          <Text>24 November 2019</Text>
+          <Text>{props.trx.completed_at}</Text>
         </View>
       </View>
       <View style={[styles.statusContainer, {
@@ -42,7 +39,7 @@ const TransactionItem = () => {
         justifyContent: "center",
         alignItems: "flex-end"
       }]}>
-        <Text>Berhasil</Text>
+        <Text>{props.trx.status}</Text>
       </View>
     </View>
   );

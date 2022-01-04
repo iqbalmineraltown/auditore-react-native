@@ -1,6 +1,7 @@
 import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import {
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -19,10 +20,8 @@ import {
   RootStack,
 } from "./src/Navigator";
 
-import {
-  HomeScreen,
-  DetailScreen,
-} from "./src/screens/Screens";
+import HomeScreen from "./src/screens/HomeScreen";
+import DetailScreen from "./src/screens/DetailScreen";
 
 const Section: React.FC<{
   title: string;
@@ -52,20 +51,22 @@ const Section: React.FC<{
   );
 };
 
-const App = () => {
-  return (
+const App = () => (
+  <SafeAreaProvider>
     <NavigationContainer>
       <RootStack.Navigator initialRouteName="HomeScreen">
-        <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+        <RootStack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ headerShown: false }} />
         <RootStack.Screen
           name="DetailScreen"
           component={DetailScreen}
-          initialParams={{ title: "I am default" }}
-        />
+          options={{ title: '' }} />
       </RootStack.Navigator>
     </NavigationContainer>
-  );
-};
+  </SafeAreaProvider>
+);
 
 const styles = StyleSheet.create({
   sectionContainer: {
