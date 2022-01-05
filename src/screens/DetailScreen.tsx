@@ -1,15 +1,19 @@
+import React from 'react';
+import { StatusBar, StyleSheet, Text, useColorScheme, View, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import React from 'react';
-import { StatusBar, StyleSheet, Text, useColorScheme, View, } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { NativeStackScreenProps, RootStackParamList, } from '../Navigator';
 import DetailInfo from '../components/DetailInfo';
+import { displayDateFormatID, displayCurrencyFormatID } from '../Utils';
+
 
 const DetailScreen = ({ route }: NativeStackScreenProps<RootStackParamList, "DetailScreen">) => {
   const trx = route.params.trx;
-
+  const navigation = useNavigation();
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -26,7 +30,14 @@ const DetailScreen = ({ route }: NativeStackScreenProps<RootStackParamList, "Det
         </View>
         <View style={[style.row, { justifyContent: "space-between" }]}>
           <Text>DETAIL TRANSAKSI</Text>
-          <Text>Tutup</Text>
+          <Pressable
+            android_ripple={{ color: '0x00000045', borderless: false, foreground: true }}
+            onPress={() => navigation.goBack()}
+          >
+            <View style={{ padding: 20 }}>
+              <Text>Tutup</Text>
+            </View>
+          </Pressable>
         </View>
         <View style={style.row}>
           <Text>{trx.sender_bank.toUpperCase()} </Text>
@@ -37,10 +48,10 @@ const DetailScreen = ({ route }: NativeStackScreenProps<RootStackParamList, "Det
           <View style={{ flexDirection: "column", flex: 2 }}>
             <DetailInfo title={trx.beneficiary_name.toUpperCase()} info={trx.account_number} />
             <DetailInfo title="BERITA TRANSFER" info={trx.remark} />
-            <DetailInfo title="WAKTU DIBUAT" info={trx.created_at} />
+            <DetailInfo title="WAKTU DIBUAT" info={displayDateFormatID(trx.created_at)} />
           </View>
           <View style={{ flexDirection: "column", flex: 1 }}>
-            <DetailInfo title="NOMINAL" info={trx.amount.toString()} />
+            <DetailInfo title="NOMINAL" info={displayCurrencyFormatID(trx.amount)} />
             <DetailInfo title="KODE UNIK" info={trx.unique_code.toString()} />
           </View>
         </View>

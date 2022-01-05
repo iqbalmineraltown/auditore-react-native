@@ -2,13 +2,13 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight, faCircle, } from '@fortawesome/free-solid-svg-icons';
 import ITransaction from '../models/ITransaction';
+import { displayDateFormatID, displayCurrencyFormatID } from '../Utils';
 
 
 const TransactionItem: React.FC<{ trx: ITransaction }> = (props) => {
@@ -28,9 +28,9 @@ const TransactionItem: React.FC<{ trx: ITransaction }> = (props) => {
         </View>
         <Text>{props.trx.beneficiary_name.toUpperCase()}</Text>
         <View style={{ flexDirection: "row" }}>
-          <Text>{props.trx.amount}</Text>
+          <Text>{displayCurrencyFormatID(props.trx.amount)}</Text>
           <FontAwesomeIcon icon={faCircle} />
-          <Text>{props.trx.completed_at}</Text>
+          <Text>{displayDateFormatID(props.trx.created_at)}</Text>
         </View>
       </View>
       <View style={[styles.statusContainer, {

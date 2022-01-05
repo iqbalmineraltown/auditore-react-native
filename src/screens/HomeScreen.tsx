@@ -1,41 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
-  ScrollView,
   StatusBar,
   useColorScheme,
-  Button,
   View,
   ActivityIndicator,
-  FlatList,
-  Text,
-  ListRenderItem,
-  StyleSheet,
-  Pressable,
+  TextInput,
 } from 'react-native';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {
-  NativeStackScreenProps,
-  NavigationContainer,
-  RootStack,
-  RootStackParamList,
-} from '../Navigator';
-
-import TransactionItem from '../components/TransactionItem';
+import TransactionList from '../components/TransactionList';
 import ITransaction from '../models/ITransaction';
 
 
-const HomeScreen = (
-  { navigation }: NativeStackScreenProps<RootStackParamList, "HomeScreen">
-) => {
+const HomeScreen = () => {
 
   const [isLoading, setLoading] = useState(true);
   const [trxList, setTrxList] = useState(Array<ITransaction>());
+  const [filteredTrxList, setFilteredTrxList] = useState(Array<ITransaction>());
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -54,6 +40,7 @@ const HomeScreen = (
       /// DEBUG check loading state
       await new Promise(res => setTimeout(res, 3000));
       setTrxList(arr);
+      setFilteredTrxList(arr);
     } catch (error) {
       console.error(error);
     }
@@ -66,30 +53,42 @@ const HomeScreen = (
     getTrxList();
   }, []);
 
-  const _renderItem: ListRenderItem<ITransaction> = ({ ...list }) => (
-    <Pressable onPress={() => navigation.navigate(
-      "DetailScreen",
-      { trx: list.item }
-    )}>
-      <TransactionItem
-        trx={list.item}
-      />
-    </Pressable>
-  );
+  /// query w/ precedence: beneficiary_name > beneficiary_bank > amount
+  const searchQuery = (query: string) => {
+    query = query.trim();
+    if (query.length == 0) {
+      setFilteredTrxList(trxList);
+      return;
+    }
+    const filteredList = trxList.filter((trx) => {
+      query = query.toLowerCase();
+      const beneficiaryName = trx.beneficiary_name.toLowerCase();
+      const beneficiaryBank = trx.beneficiary_bank.toLowerCase();
+      const amount = trx.amount.toString();
+      return beneficiaryName.indexOf(query) > -1
+        || beneficiaryBank.indexOf(query) > -1
+        || amount.indexOf(query) > -1;
+    });
+    setFilteredTrxList(filteredList);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <TextInput
+        onChangeText={searchQuery}
+        placeholder="Cari nama, bank, atau nominal">
+      </TextInput>
       <View
         style={{
           backgroundColor: isDarkMode ? Colors.black : Colors.white,
         }}>
-        {isLoading ? <ActivityIndicator /> : (
-          <FlatList<ITransaction>
-            data={trxList}
-            keyExtractor={({ id }, index) => id}
-            renderItem={_renderItem}
-          />
-        )}
+        {
+          isLoading ? <ActivityIndicator /> : (
+            <TransactionList
+              trxList={filteredTrxList}
+            />
+          )}
       </View>
     </SafeAreaView>
   );
