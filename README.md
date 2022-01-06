@@ -12,4 +12,6 @@
 
 - [Font Awesome](https://github.com/FortAwesome/react-native-fontawesome/blob/master/LICENSE.txt)
 
--
+- [React Native Clipboard](https://github.com/react-native-clipboard/clipboard/blob/master/LICENSE)
+
+- [React Native Root Toast](https://github.com/magicismight/react-native-root-toast/blob/master/LICENSE.txt)

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -7,41 +8,53 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight, faCircle, } from '@fortawesome/free-solid-svg-icons';
+import { useNavigation } from '@react-navigation/native';
+
+import { } from "../Navigator";
 import ITransaction from '../models/ITransaction';
 import { displayDateFormatID, displayCurrencyFormatID } from '../Utils';
 
 
-const TransactionItem: React.FC<{ trx: ITransaction }> = (props) => {
+const TransactionItem: React.FC<{ transaction: ITransaction }> = (props) => {
+  const navigation = useNavigation();
+  const trx = props.transaction;
   return (
-    <View style={[styles.mainContainer, {
-      flexDirection: "row",
-    }]}>
-      <View style={[styles.infoContainer, {
-        flexDirection: "column",
-        flex: 2,
-        justifyContent: "center"
+    <Pressable
+      android_ripple={{ color: '0x00000045', borderless: false, foreground: true }}
+      onPress={() => navigation.navigate("DetailScreen",
+        { transaction: trx }
+      )}
+    >
+      <View style={[styles.mainContainer, {
+        flexDirection: "row",
       }]}>
-        <View style={{ flexDirection: "row" }}>
-          <Text>{props.trx.sender_bank.toUpperCase()} </Text>
-          <FontAwesomeIcon icon={faArrowRight} />
-          <Text>{props.trx.beneficiary_bank.toUpperCase()}</Text>
+        <View style={[styles.infoContainer, {
+          flexDirection: "column",
+          flex: 2,
+          justifyContent: "center"
+        }]}>
+          <View style={{ flexDirection: "row" }}>
+            <Text>{trx.sender_bank.toUpperCase()} </Text>
+            <FontAwesomeIcon icon={faArrowRight} />
+            <Text>{trx.beneficiary_bank.toUpperCase()}</Text>
+          </View>
+          <Text>{trx.beneficiary_name.toUpperCase()}</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text>{displayCurrencyFormatID(trx.amount)}</Text>
+            <FontAwesomeIcon icon={faCircle} />
+            <Text>{displayDateFormatID(trx.created_at)}</Text>
+          </View>
         </View>
-        <Text>{props.trx.beneficiary_name.toUpperCase()}</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text>{displayCurrencyFormatID(props.trx.amount)}</Text>
-          <FontAwesomeIcon icon={faCircle} />
-          <Text>{displayDateFormatID(props.trx.created_at)}</Text>
+        <View style={[styles.statusContainer, {
+          flexDirection: "column",
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "flex-end"
+        }]}>
+          <Text>{trx.status}</Text>
         </View>
       </View>
-      <View style={[styles.statusContainer, {
-        flexDirection: "column",
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "flex-end"
-      }]}>
-        <Text>{props.trx.status}</Text>
-      </View>
-    </View>
+    </Pressable>
   );
 };
 

@@ -13,7 +13,7 @@ declare global {
 
 export type RootStackParamList = {
   HomeScreen: undefined;
-  DetailScreen: { trx: ITransaction };
+  DetailScreen: { transaction: ITransaction };
 };
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();

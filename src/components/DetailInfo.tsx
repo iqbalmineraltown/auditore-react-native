@@ -1,10 +1,15 @@
 import React from 'react';
 import { Text, View } from "react-native";
 
-const DetailInfo: React.FC<{ title: string; info: string; }> = ({ title, info }) => (
+type DetailInfoProps = {
+  title: string;
+  info: string;
+};
+
+const DetailInfo: React.FC<DetailInfoProps> = (props) => (
   <View style={{ flexDirection: "column" }}>
-    <Text>{title}</Text>
-    <Text>{info}</Text>
+    <Text>{props.title}</Text>
+    <Text>{props.info}</Text>
   </View>
 );
 
