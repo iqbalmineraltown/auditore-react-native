@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   StyleSheet, StatusBar, View, ActivityIndicator, TextInput, Text,
-  Pressable, Keyboard, TouchableWithoutFeedback
+  Pressable, useColorScheme,
 } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faSearch, faChevronDown }
+  from '@fortawesome/free-solid-svg-icons';
+
+import { colors, baseStyles } from "../const/Styles";
 
 import ITransaction from '../models/ITransaction';
 import { SortType } from '../models/SortType';
@@ -29,7 +31,9 @@ const HomeScreen = () => {
   const [selectedSortType, setSelectedSortType] =
     useState<SortType | null>(null);
   const [sortButtonLabel, setSortButtonLabel] = useState('Urutkan');
+  const [isQueryFocused, setQueryFocused] = useState(false);
 
+  const isDarkMode = useColorScheme() === 'dark';
 
   const getTrxList = async () => {
     setLoading(true);
@@ -60,11 +64,12 @@ const HomeScreen = () => {
   /// beneficiary_name > beneficiary_bank > sender_bank > amount
   const searchQuery = (query: string) => {
     setQueryText(query);
-    query = query.trim();
     if (query.length == 0) {
+      setQueryFocused(false);
       setFilteredTrxList(trxList);
       return;
     }
+    setQueryFocused(true);
     const filteredList = trxList.filter((trx) => {
       query = query.toLowerCase();
       const beneficiaryName = trx.beneficiary_name.toLowerCase();
@@ -87,27 +92,28 @@ const HomeScreen = () => {
 
   const clearQuery = () => {
     setQueryText('');
+    setQueryFocused(false);
     setFilteredTrxList(trxList);
   };
 
   const onOpenFilterModal = () => {
     setFilterModalVisible(true);
-  }
+  };
 
   const onCloseFilterModal = () => {
     setFilterModalVisible(false);
-  }
+  };
 
   const onSelectSortHandler = (sortItem: SortingItemProps | null) => {
-    if (selectedSortType == null && sortItem?.value == null) {
+    if (selectedSortType == null && sortItem?.key == null) {
       setFilterModalVisible(false);
       return;
     }
 
-    setSelectedSortType(sortItem?.value ?? null);
-    setSortButtonLabel(sortItem?.label ?? 'Urutkan')
+    setSelectedSortType(sortItem?.key ?? null);
+    setSortButtonLabel(sortItem?.value ?? 'Urutkan')
 
-    const sortType = sortItem?.value;
+    const sortType = sortItem?.key;
     let sortedTrxList: ITransaction[];
     switch (sortType) {
       case SortType.NameAscending:
@@ -131,27 +137,37 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle={'dark-content'} />
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ flex: 3, flexDirection: "row" }}>
+    <SafeAreaView style={baseStyles.baseScreenComponent}>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <View style={styles.mainHeader}>
+        <View style={styles.queryContainer}>
+          <FontAwesomeIcon style={styles.searchIcon} icon={faSearch} />
           <TextInput
+            style={styles.queryInput}
             onChangeText={searchQuery}
             value={queryText}
+            maxLength={30}
             placeholder="Cari nama, bank, atau nominal">
           </TextInput>
-          <Pressable
-            style={[styles.sortButton]}
-            onPress={clearQuery}
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </Pressable>
+          {isQueryFocused && <Pressable
+            onPress={clearQuery}>
+            <FontAwesomeIcon icon={faTimes}
+              style={styles.clearTextButton} />
+          </Pressable>}
         </View>
-        <View style={{ flex: 2 }}>
+        <View style={styles.filterContainer}>
           <Pressable
-            style={[styles.sortButton]}
+            android_ripple={{
+              color: colors.rippleOverlay, borderless: false,
+              foreground: true
+            }}
+            style={styles.sortButton}
             onPress={onOpenFilterModal}>
-            <Text style={styles.textStyle}>{sortButtonLabel}</Text>
+            <Text style={[styles.sortButtonLabel, baseStyles.primaryAction]}>
+              {sortButtonLabel}
+            </Text>
+            <FontAwesomeIcon icon={faChevronDown}
+              style={baseStyles.primaryAction} />
           </Pressable>
         </View>
       </View>
@@ -161,8 +177,7 @@ const HomeScreen = () => {
         sortSelectHandler={onSelectSortHandler}
         selectedSortType={selectedSortType}
       />
-      <View
-        style={{ backgroundColor: Colors.white }}>
+      <View>
         {isLoading ?
           <ActivityIndicator /> :
           <TransactionList
@@ -175,44 +190,43 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
+  mainHeader: {
+    ...baseStyles.row,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00000054"
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
+    marginHorizontal: 8,
+    marginVertical: 4,
+    padding: 4,
+    backgroundColor: colors.white,
+    borderRadius: 4,
   },
   clearTextButton: {
     padding: 10,
+    color: colors.placeholder,
+  },
+  sortButtonLabel: {
+    fontWeight: "bold",
+    paddingRight: 2,
   },
   sortButton: {
-    padding: 10,
-    elevation: 2,
-    backgroundColor: "#F194FF",
+    ...baseStyles.row,
+    paddingHorizontal: 4,
+    paddingVertical: 8,
   },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
+  searchIcon: {
+    color: colors.placeholder
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
-  }
+  queryContainer: {
+    ...baseStyles.row,
+    flex: 3,
+  },
+  queryInput: {
+    ...baseStyles.baseTextStyles,
+    flex: 1,
+  },
+  filterContainer: {
+    ...baseStyles.row,
+  },
 });
 
 export default HomeScreen;

@@ -1,13 +1,13 @@
 import { SortType } from '../models/SortType';
 
 export type SortingItemProps = {
-  value: SortType;
-  label: string;
+  key: SortType;
+  value: string;
 }
 
 export const sortTypeData: SortingItemProps[] = [
-  { value: SortType.NameAscending, label: "Nama A-Z" },
-  { value: SortType.NameDescending, label: "Nama Z-A" },
-  { value: SortType.CreatedDateAscending, label: "Tanggal Terlama" },
-  { value: SortType.CreatedDateDescending, label: "Tanggal Terbaru" },
+  { key: SortType.NameAscending, value: "Nama A-Z" },
+  { key: SortType.NameDescending, value: "Nama Z-A" },
+  { key: SortType.CreatedDateAscending, value: "Tanggal Terlama" },
+  { key: SortType.CreatedDateDescending, value: "Tanggal Terbaru" },
 ];

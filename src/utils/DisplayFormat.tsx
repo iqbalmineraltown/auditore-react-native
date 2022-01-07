@@ -25,3 +25,10 @@ export const displayCurrencyFormatID = (amount: number) => {
 
   return "Rp" + amountStr;
 };
+
+export const bankNameCase = (bankName: string) => {
+  if (bankName.length <= 4) {
+    return bankName.toUpperCase();
+  }
+  return bankName.substring(0, 1).toUpperCase() + bankName.substring(1);
+}

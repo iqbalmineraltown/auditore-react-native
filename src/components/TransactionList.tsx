@@ -4,7 +4,10 @@ import {
   FlatList,
   Text,
   ListRenderItem,
+  StyleSheet,
 } from 'react-native';
+
+import { baseStyles } from '../const/Styles';
 
 import ITransaction from "../models/ITransaction";
 import TransactionItem from '../components/TransactionItem';
@@ -23,8 +26,8 @@ const TransactionList: React.FC<TransactionListProps> = (props) => {
 
   if (props.trxList.length == 0) {
     return (
-      <View style={{ alignContent: 'center' }}>
-        <Text>Wah hasil pencarianmu gak ditemukan</Text>
+      <View style={styles.mainContainerEmpty}>
+        <Text style={styles.labelEmpty}>Wah hasil pencarianmu gak ditemukan</Text>
       </View>
     );
   }
@@ -42,3 +45,15 @@ const TransactionList: React.FC<TransactionListProps> = (props) => {
 };
 
 export default TransactionList;
+
+const styles = StyleSheet.create({
+  mainContainerEmpty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  labelEmpty: {
+    ...baseStyles.baseTextStyles,
+    fontSize: 14,
+    fontWeight: "500",
+  }
+});

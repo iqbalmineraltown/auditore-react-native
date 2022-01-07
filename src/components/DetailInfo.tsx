@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
+import { baseStyles, colors } from '../const/Styles';
 
 type DetailInfoProps = {
   title: string;
@@ -7,10 +9,25 @@ type DetailInfoProps = {
 };
 
 const DetailInfo: React.FC<DetailInfoProps> = (props) => (
-  <View style={{ flexDirection: "column" }}>
-    <Text>{props.title}</Text>
-    <Text>{props.info}</Text>
+  <View style={styles.mainContainer}>
+    <Text style={styles.title}>{props.title}</Text>
+    <Text style={styles.info}>{props.info}</Text>
   </View>
 );
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    ...baseStyles.column,
+    alignItems: "flex-start",
+    paddingVertical: 8,
+  },
+  title: {
+    ...baseStyles.baseTextStyles,
+    fontWeight: "bold"
+  },
+  info: {
+    ...baseStyles.baseTextStyles,
+  },
+});
 
 export default DetailInfo;

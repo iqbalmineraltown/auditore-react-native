@@ -4,6 +4,8 @@ import {
   ListRenderItem, FlatList
 } from "react-native";
 
+import { colors, baseStyles } from "../const/Styles";
+
 import { SortType } from "../models/SortType";
 import SortTypeItem from "../components/SortTypeItem";
 import { sortTypeData, SortingItemProps } from "../const/SortTypeData";
@@ -19,10 +21,10 @@ const SortingDialog: React.FC<SortingDialogProps> = (props) => {
 
   const renderItem: ListRenderItem<SortingItemProps> = ({ ...renderItem }) => (
     <SortTypeItem
-      checked={props.selectedSortType == renderItem.item.value}
+      checked={props.selectedSortType == renderItem.item.key}
       item={renderItem.item}
-      value={renderItem.item.value}
-      label={renderItem.item.label}
+      value={renderItem.item.key}
+      label={renderItem.item.value}
       onPress={props.sortSelectHandler} />
   );
 
@@ -41,15 +43,21 @@ const SortingDialog: React.FC<SortingDialogProps> = (props) => {
         onPressOut={props.closeHandler}>
         <TouchableWithoutFeedback>
           <View style={styles.modalView}>
-            <Pressable
-              style={styles.button}
-              onPressOut={onResetHandler}>
-              <Text>Reset</Text>
-            </Pressable>
+            <View style={styles.resetContainer}>
+              <Pressable
+                android_ripple={{
+                  color: colors.rippleOverlay, borderless: false,
+                  foreground: true
+                }}
+                style={styles.resetButton}
+                onPress={onResetHandler}>
+                <Text style={styles.resetLabel}>Reset</Text>
+              </Pressable>
+            </View>
             <FlatList<SortingItemProps>
               style={{ flexGrow: 0 }}
               data={sortTypeData}
-              keyExtractor={({ value }, _) => value.toString()}
+              keyExtractor={({ key: value }, _) => value.toString()}
               renderItem={renderItem}
             />
           </View>
@@ -61,18 +69,21 @@ const SortingDialog: React.FC<SortingDialogProps> = (props) => {
 
 const styles = StyleSheet.create({
   centeredView: {
+    ...baseStyles.row,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00000054"
+    backgroundColor: colors.black54,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    ...baseStyles.column,
+    flex: 1,
+    backgroundColor: colors.white,
+    borderRadius: 4,
+    margin: 24,
+    padding: 24,
+    alignItems: "flex-start",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2
@@ -81,19 +92,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5
   },
-  button: {
+  resetContainer: {
+    ...baseStyles.row,
+    alignItems: "stretch",
+  },
+  resetButton: {
     padding: 10,
     elevation: 2,
-    backgroundColor: "#F194FF"
   },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
+  resetLabel: {
+    ...baseStyles.baseTextStyles,
+    color: colors.primary,
+    fontSize: 14,
+    fontWeight: 'bold',
   }
 });
 
