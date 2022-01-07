@@ -47,7 +47,7 @@ const SortingDialog: React.FC<SortingDialogProps> = (props) => {
               <Text>Reset</Text>
             </Pressable>
             <FlatList<SortingItemProps>
-              contentContainerStyle={{ flexGrow: 0 }}
+              style={{ flexGrow: 0 }}
               data={sortTypeData}
               keyExtractor={({ value }, _) => value.toString()}
               renderItem={renderItem}

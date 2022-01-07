@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   StyleSheet, StatusBar, View, ActivityIndicator, TextInput, Text,
-  Pressable
+  Pressable, Keyboard, TouchableWithoutFeedback
 } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -32,6 +32,7 @@ const HomeScreen = () => {
 
 
   const getTrxList = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         'https://nextar.flip.id/frontend-test'
@@ -79,6 +80,12 @@ const HomeScreen = () => {
     });
     setFilteredTrxList(filteredList);
   };
+
+  const onRefreshHandler = async () => {
+    await getTrxList();
+    clearQuery();
+    setSelectedSortType(null);
+  }
 
   const clearQuery = () => {
     setQueryText('');
@@ -160,7 +167,10 @@ const HomeScreen = () => {
         style={{ backgroundColor: Colors.white }}>
         {isLoading ?
           <ActivityIndicator /> :
-          <TransactionList trxList={filteredTrxList} />}
+          <TransactionList
+            trxList={filteredTrxList}
+            refreshing={isLoading}
+            onRefresh={onRefreshHandler} />}
       </View>
     </SafeAreaView>
   );

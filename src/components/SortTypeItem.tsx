@@ -32,7 +32,7 @@ const SortTypeItem: React.FC<SortTypeItemProps> = (props) => {
 const styles = StyleSheet.create({
   optionItem: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   outline: {
     width: 24,

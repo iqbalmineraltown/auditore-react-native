@@ -6,6 +6,13 @@
 1. Open android emulator or connect physical device with adb enabled
 1. Open new terminal, run with `npx react-native run-android`
 
+## Build Debug fat-apk
+
+1. Make sure folderpath  `android/app/src/main/assets` exists or simply create
+1. Run on root project:`react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res`
+1. move to android folder `cd android`
+1. run `./gradlew assembleDebug`
+
 ## Library Licenses
 
 - [React Native](https://github.com/facebook/react-native/blob/0.66-stable/LICENSE)
