@@ -88,6 +88,7 @@ const HomeScreen = () => {
     await getTrxList();
     clearQuery();
     setSelectedSortType(null);
+    setSortButtonLabel('Urutkan');
   }
 
   const clearQuery = () => {
