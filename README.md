@@ -4,6 +4,7 @@
 
 - Unable to test on iOS due to lack of development hardware
 - Tapping when keyboard is active will dismiss the keyboard
+- Building fat APK, should be using AAB format but need to go through Playstore
 
 ## How to run on Android
 
@@ -17,6 +18,12 @@
 1. Run on root project:`react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res`
 1. move to android folder `cd android`
 1. run `./gradlew assembleDebug`
+
+### one-liner for Powershell pre-7.0
+
+```console
+react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res; cd android; ./gradlew assembleDebug
+```
 
 ## Library Licenses
 
