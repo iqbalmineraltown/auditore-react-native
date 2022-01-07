@@ -6,7 +6,7 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import {
   NavigationContainer,
   RootStack,
-} from "./src/Navigator";
+} from "./src/navigator/Navigator";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import DetailScreen from "./src/screens/DetailScreen";

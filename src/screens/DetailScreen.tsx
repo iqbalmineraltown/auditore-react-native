@@ -9,9 +9,9 @@ import Toast from 'react-native-root-toast';
 
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { NativeStackScreenProps, RootStackParamList, } from '../Navigator';
+import { NativeStackScreenProps, RootStackParamList, } from '../navigator/Navigator';
 import DetailInfo from '../components/DetailInfo';
-import { displayDateFormatID, displayCurrencyFormatID } from '../Utils';
+import { displayDateFormatID, displayCurrencyFormatID } from '../utils/DisplayFormat';
 
 
 const DetailScreen = ({ route }: NativeStackScreenProps<RootStackParamList, "DetailScreen">) => {

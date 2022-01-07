@@ -13,7 +13,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ITransaction from '../models/ITransaction';
 import { SortType } from '../models/SortType';
 import TransactionList from '../components/TransactionList';
-import { SortingItemProps } from '../Const';
+import { SortingItemProps } from '../const/SortTypeData';
 import { sortByCreatedAt, sortByBeneficiaryName } from '../utils/Sort';
 import SortingDialog from './SortingDialog';
 
@@ -44,8 +44,6 @@ const HomeScreen = () => {
         arr.push(trxObj[key] as ITransaction);
       });
 
-      /// DEBUG check loading state
-      await new Promise(res => setTimeout(res, 1000));
       setTrxList(arr);
       setFilteredTrxList(arr);
     } catch (error) {

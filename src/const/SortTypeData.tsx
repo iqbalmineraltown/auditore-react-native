@@ -1,4 +1,4 @@
-import { SortType } from './models/SortType';
+import { SortType } from '../models/SortType';
 
 export type SortingItemProps = {
   value: SortType;

@@ -3,7 +3,7 @@ import { View, StyleSheet, Pressable, Text } from "react-native";
 import { promisify } from "util";
 
 import { SortType } from '../models/SortType';
-import { SortingItemProps } from '../Const';
+import { SortingItemProps } from '../const/SortTypeData';
 
 interface SortTypeItemProps {
   onPress: (sortType: SortingItemProps | null) => void

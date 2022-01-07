@@ -6,7 +6,7 @@ import {
 
 import { SortType } from "../models/SortType";
 import SortTypeItem from "../components/SortTypeItem";
-import { sortTypeData, SortingItemProps } from "../Const";
+import { sortTypeData, SortingItemProps } from "../const/SortTypeData";
 
 type SortingDialogProps = {
   sortSelectHandler: (sortType: SortingItemProps | null) => void;
