@@ -27,7 +27,9 @@ const TransactionList: React.FC<TransactionListProps> = (props) => {
   if (props.trxList.length == 0) {
     return (
       <View style={styles.mainContainerEmpty}>
-        <Text style={styles.labelEmpty}>Wah hasil pencarianmu gak ditemukan</Text>
+        <Text style={styles.labelEmpty}>
+          Wah hasil pencarianmu gak ditemukan
+        </Text>
       </View>
     );
   }

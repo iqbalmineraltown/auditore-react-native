@@ -31,10 +31,12 @@ const TransactionItem: React.FC<{ transaction: ITransaction }> = (props) => {
   const bgColorStyle = status?.key == TransactionStatus.Success ?
     styles.successBgColor : styles.pendingBgColor;
 
-  const statusContainerStyle = [styles.baseStatusContainer, status?.key == TransactionStatus.Success ?
+  const statusContainerStyle = [styles.baseStatusContainer,
+  status?.key == TransactionStatus.Success ?
     styles.successBgColor : styles.pendingStatusContainer];
 
-  const statusLabelStyle = [styles.baseStatusLabel, status?.key == TransactionStatus.Success ?
+  const statusLabelStyle = [styles.baseStatusLabel,
+  status?.key == TransactionStatus.Success ?
     styles.statusLabel : styles.pendingStatusLabel];
 
   const statusDisplay = status?.label;
@@ -57,7 +59,9 @@ const TransactionItem: React.FC<{ transaction: ITransaction }> = (props) => {
               <Text style={styles.bankLabel}>
                 {trx.sender_bank.toUpperCase()}
               </Text>
-              <FontAwesomeIcon icon={faArrowRight} size={12} style={styles.inlineIcon} />
+              <FontAwesomeIcon icon={faArrowRight}
+                size={12}
+                style={styles.inlineIcon} />
               <Text style={styles.bankLabel}>
                 {bankNameCase(trx.beneficiary_bank)}
               </Text>
@@ -69,7 +73,8 @@ const TransactionItem: React.FC<{ transaction: ITransaction }> = (props) => {
               <Text style={styles.infoLabel}>
                 {displayCurrencyFormatID(trx.amount)}
               </Text>
-              <FontAwesomeIcon icon={faCircle} size={8} style={styles.inlineIcon} />
+              <FontAwesomeIcon icon={faCircle} size={8}
+                style={styles.inlineIcon} />
               <Text style={styles.infoLabel}>
                 {displayDateFormatID(trx.created_at)}
               </Text>

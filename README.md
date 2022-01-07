@@ -1,5 +1,10 @@
 # AwesomeTsProject
 
+## Known Issues
+
+- Unable to test on iOS due to lack of development hardware
+- Tapping when keyboard is active will dismiss the keyboard
+
 ## How to run on Android
 
 1. Open terminal, run metro bundler with `npx react-native start` and let it run on background

@@ -8,7 +8,8 @@ export const displayDateFormatID = (dateTimeString: string) => {
   const dateLocale = new Date(dateTimeString).toLocaleDateString();
   const dateComponents = dateLocale.split("/").map((c) => parseInt(c));
 
-  const resultDateDisplay = dateComponents[1] + " " + MonthID[dateComponents[0]] + " " + displayYear;
+  const resultDateDisplay = dateComponents[1] + " "
+    + MonthID[dateComponents[0]] + " " + displayYear;
   return resultDateDisplay;
 };
 
