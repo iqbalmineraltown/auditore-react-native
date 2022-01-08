@@ -23,6 +23,9 @@
 react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res; cd android; ./gradlew assembleDebug; cd ..
 ```
 
+### using codemagic
+This repository's CI/CD already configured with [codemagic](https://codemagic.io/)
+
 ## Library Licenses
 
 - [React Native](https://github.com/facebook/react-native/blob/0.66-stable/LICENSE)
