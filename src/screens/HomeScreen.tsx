@@ -148,6 +148,7 @@ const HomeScreen = () => {
             onChangeText={searchQuery}
             value={queryText}
             maxLength={30}
+            placeholderTextColor={colors.textHint}
             placeholder="Cari nama, bank, atau nominal">
           </TextInput>
           {isQueryFocused && <Pressable

@@ -9,6 +9,7 @@ export const colors = {
   primary: 'tomato',
   secondary: 'mediumseagreen',
   placeholder: '#8A8A8A',
+  textHint: '#AEAEAE',
   rippleOverlay: '#00000045',
 };
 
