@@ -12,7 +12,7 @@
 1. Open android emulator or connect physical device with adb enabled
 1. Open new terminal, run with `npx react-native run-android`
 
-## Build Debug fat-apk
+## Build Debug APK Files
 
 1. Make sure folderpath  `android/app/src/main/assets` exists or simply create
 1. Run on root project:`react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res`
