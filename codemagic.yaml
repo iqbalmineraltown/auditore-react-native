@@ -3,7 +3,7 @@ workflows:
     name: React Native Android Debug apk
     max_build_duration: 60
     environment:
-      node: latest
+      node: 14.18.1
     scripts:
       - name: Install npm dependencies
         script: |
