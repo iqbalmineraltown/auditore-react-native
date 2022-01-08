@@ -4,7 +4,8 @@
 
 - Unable to test on iOS due to lack of development hardware
 - Tapping when keyboard is active will dismiss the keyboard
-- Building fat APK, should be using AAB format but need to go through Playstore
+- Building split APK, should be using AAB format but need to go through Playstore
+- [Duplicate resource issue when building release](https://github.com/facebook/react-native/issues/22234)
 
 ## How to run on Android
 
