@@ -25,6 +25,7 @@ react-native bundle --platform android --dev false --entry-file index.js --bundl
 
 ### using codemagic
 This repository's CI/CD already configured with [codemagic](https://codemagic.io/)
+Simply create account, connect repository, and start run the workflows
 
 ## Library Licenses
 
