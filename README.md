@@ -1,5 +1,7 @@
 # AwesomeTsProject
 
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/iqbalmineraltown/auditore-react-native?include_prereleases&style=for-the-badge)
+
 ## Known Issues
 
 - Unable to test on iOS due to lack of development hardware
